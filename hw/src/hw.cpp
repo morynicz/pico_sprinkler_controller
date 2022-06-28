@@ -15,8 +15,12 @@ void blinkLed(uint out) {
 
 void blinkMany(std::vector<uint> &outs) {
   for (auto out : outs)
+  {
     gpio_put(out, 1);
+  }
   sleep_ms(250);
   for (auto out : outs)
+  {
     gpio_put(out, 0);
+  }
 }

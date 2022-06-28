@@ -6,6 +6,7 @@
 
 #include "hardware/pio.h"
 #include "hardware/uart.h"
+#include "hw/hw.hpp"
 #include "pico/multicore.h"
 #include "pico/stdlib.h"
 #include "uart_rx.pio.h"
@@ -26,29 +27,6 @@
 void core1_main() {
   const char *s = (const char *)multicore_fifo_pop_blocking();
   uart_puts(HARD_UART_INST, s);
-}
-
-void setOuts(const std::vector<uint> &outs) {
-  for (auto out : outs) {
-    gpio_init(out);
-    gpio_set_dir(out, GPIO_OUT);
-  }
-}
-
-void blinkLed(uint out) {
-  gpio_put(out, 1);
-  sleep_ms(250);
-  gpio_put(out, 0);
-}
-
-void blinkMany(std::vector<uint> &outs) {
-  for (auto out : outs) {
-    gpio_put(out, 1);
-  }
-  sleep_ms(250);
-  for (auto out : outs) {
-    gpio_put(out, 0);
-  }
 }
 
 int main() {
