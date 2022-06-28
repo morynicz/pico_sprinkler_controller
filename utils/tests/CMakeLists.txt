@@ -1,0 +1,2 @@
+add_executable(io_testing_test io_testing_tests.cpp)
+target_link_libraries(io_testing_test gtest gmock gmock_main utils)
