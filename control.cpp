@@ -9,8 +9,8 @@
 #include "pico/multicore.h"
 #include "pico/stdlib.h"
 #include "uart_rx.pio.h"
+#include "utils/io_testing.hpp"
 #include <vector>
-// #include "utils/io_testing.hpp"
 
 #include <iostream>
 
@@ -42,21 +42,13 @@ void blinkLed(uint out) {
 }
 
 void blinkMany(std::vector<uint> &outs) {
-  for (auto out : outs)
+  for (auto out : outs) {
     gpio_put(out, 1);
-  sleep_ms(250);
-  for (auto out : outs)
-    gpio_put(out, 0);
-}
-
-std::vector<uint> numToDisp(const std::vector<uint> &outs, char in) {
-  std::vector<uint> result;
-  for (int i = 0; i < 1 << outs.size(); i = i << 1) {
-    if (in & i) {
-      result.push_back(outs.at(i));
-    }
   }
-  return result;
+  sleep_ms(250);
+  for (auto out : outs) {
+    gpio_put(out, 0);
+  }
 }
 
 int main() {
@@ -87,18 +79,18 @@ int main() {
 
   blinkLed(25);
 
-  // gpio_init(LED_PIN);
-  // gpio_set_dir(LED_PIN, GPIO_OUT);
   char i = 0;
   while (true) {
-    std::cout << "test" << std::endl;
-    // gpio_put(LED_PIN, 1);
-    // sleep_ms(250);
-    // gpio_put(LED_PIN, 0);
-    // sleep_ms(250);
+    sleep_ms(250);
+
+    blinkLed(25);
+
+    // auto dis = disp;
+
     auto dis = numToDisp(disp, i);
     i++;
     i = i % 64;
+    blinkMany(dis);
 
     // Echo characters received from PIO to the console
     // while (true) {

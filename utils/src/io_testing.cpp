@@ -1,6 +1,5 @@
 #include "utils/io_testing.hpp"
 
-
 /*
 std::vector<uint> numToDisp(const std::vector<uint>& outs, char in)
 {
